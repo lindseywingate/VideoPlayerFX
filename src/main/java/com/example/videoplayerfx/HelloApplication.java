@@ -40,13 +40,6 @@ public class HelloApplication extends Application {
         playButton.setOnAction(new EventHandler<ActionEvent>() {
             public void handle(ActionEvent e) {
                 Status status = mediaPlayer.getStatus();
-
-                if (status == Status.UNKNOWN  || status == Status.HALTED)
-                {
-                    // don't do anything in these states
-                    return;
-                }
-
                 if ( status == Status.PAUSED
                         || status == Status.READY
                         || status == Status.STOPPED)
@@ -57,13 +50,21 @@ public class HelloApplication extends Application {
                         atEndOfMedia = false;
                     }
                     mediaPlayer.play();
-                } else {
-                    mediaPlayer.pause();
                 }
             }
         });
 
         Button pauseButton = new Button("||");
+
+        pauseButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                Status status = mediaPlayer.getStatus();
+                if (status == Status.PLAYING) {
+                    mediaPlayer.pause();
+                }
+            }
+        });
 
         //add media bar to hold play and pause buttons
         mediaBar = new HBox();
