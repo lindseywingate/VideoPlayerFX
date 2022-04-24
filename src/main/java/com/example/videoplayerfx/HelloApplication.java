@@ -2,6 +2,8 @@ package com.example.videoplayerfx;
 
 import java.io.File;
 import javafx.application.Application;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -13,6 +15,7 @@ import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
+import javafx.scene.media.MediaPlayer.Status;
 import javafx.scene.media.MediaView;
 import javafx.scene.Group;
 
@@ -20,6 +23,7 @@ import java.io.IOException;
 
 public class HelloApplication extends Application {
     private HBox mediaBar;
+    private boolean atEndOfMedia = false;
 
     @Override
     public void start(Stage stage) throws IOException {
@@ -29,12 +33,39 @@ public class HelloApplication extends Application {
         MediaPlayer mediaPlayer = new MediaPlayer(media);
         //mediaPlayer.setAutoPlay(true);
         MediaView mediaView = new MediaView(mediaPlayer);
-        //setBottom(mediaBar);
 
         //create play button
         Button playButton = new Button(">");
+
+        playButton.setOnAction(new EventHandler<ActionEvent>() {
+            public void handle(ActionEvent e) {
+                Status status = mediaPlayer.getStatus();
+
+                if (status == Status.UNKNOWN  || status == Status.HALTED)
+                {
+                    // don't do anything in these states
+                    return;
+                }
+
+                if ( status == Status.PAUSED
+                        || status == Status.READY
+                        || status == Status.STOPPED)
+                {
+                    // rewind the movie if we're sitting at the end
+                    if (atEndOfMedia) {
+                        mediaPlayer.seek(mediaPlayer.getStartTime());
+                        atEndOfMedia = false;
+                    }
+                    mediaPlayer.play();
+                } else {
+                    mediaPlayer.pause();
+                }
+            }
+        });
+
         Button pauseButton = new Button("||");
 
+        //add media bar to hold play and pause buttons
         mediaBar = new HBox();
         mediaBar.setAlignment(Pos.BOTTOM_CENTER);
         mediaBar.setPadding(new Insets(5, 10, 5, 10));
