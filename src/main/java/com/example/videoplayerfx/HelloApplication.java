@@ -32,15 +32,13 @@ public class HelloApplication extends Application {
         //setBottom(mediaBar);
 
         //create play button
-        Button playButton = new Button();
-        playButton.setText("PLAY BUTTON");
-        Button pauseButton = new Button();
-        pauseButton.setText("PAUSE BUTTON");
+        Button playButton = new Button(">");
+        Button pauseButton = new Button("||");
 
         mediaBar = new HBox();
-        mediaBar.setAlignment(Pos.CENTER);
+        mediaBar.setAlignment(Pos.BOTTOM_CENTER);
         mediaBar.setPadding(new Insets(5, 10, 5, 10));
-        BorderPane.setAlignment(mediaBar, Pos.CENTER);
+        BorderPane.setAlignment(mediaBar, Pos.BOTTOM_CENTER);
         mediaBar.getChildren().add(playButton);
         mediaBar.getChildren().add(pauseButton);
         Group root = new Group(mediaBar);
