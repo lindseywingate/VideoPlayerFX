@@ -27,33 +27,30 @@ public class HelloApplication extends Application {
         String path = "/Users/lindseymariewingate/Documents/school/576/fp/dataset2/Videos/data_test2.wav";
         Media media = new Media(new File(path).toURI().toString());
         MediaPlayer mediaPlayer = new MediaPlayer(media);
-        mediaPlayer.setAutoPlay(true);
+        //mediaPlayer.setAutoPlay(true);
         MediaView mediaView = new MediaView(mediaPlayer);
-//        Pane myPane = new Pane();
-//        myPane.getChildren().add(mediaView);
         //setBottom(mediaBar);
 
-        //setCenter(myPane);
-
-
+        //create play button
         Button playButton = new Button();
-        playButton.setText("TESTING BUTTON");
-//        playButton.setTranslateX(150);
-//        playButton.setTranslateY(60);
-        Group root = new Group(playButton);
+        playButton.setText("PLAY BUTTON");
+        Button pauseButton = new Button();
+        pauseButton.setText("PAUSE BUTTON");
+
+        mediaBar = new HBox();
+        mediaBar.setAlignment(Pos.CENTER);
+        mediaBar.setPadding(new Insets(5, 10, 5, 10));
+        BorderPane.setAlignment(mediaBar, Pos.CENTER);
+        mediaBar.getChildren().add(playButton);
+        mediaBar.getChildren().add(pauseButton);
+        Group root = new Group(mediaBar);
+
         root.getChildren().add(mediaView);
         Scene scene = new Scene(root, 320, 240);
-        //, fxmlLoader.load()
-        //stage.setScene(scene);
-        //stage.setTitle("VIDEO!");
         stage.setScene(scene);
         stage.show();
 
-//        mediaBar = new HBox();
-//        mediaBar.setAlignment(Pos.CENTER);
-//        mediaBar.setPadding(new Insets(5, 10, 5, 10));
-//        BorderPane.setAlignment(mediaBar, Pos.CENTER);
-//        mediaBar.getChildren().add(playButton);
+
     }
 
     public static void main(String[] args) {
