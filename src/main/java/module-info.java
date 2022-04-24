@@ -8,6 +8,7 @@ module com.example.videoplayerfx {
     requires org.kordamp.bootstrapfx.core;
     requires eu.hansolo.tilesfx;
     requires javafx.media;
+    requires java.desktop;
 
     opens com.example.videoplayerfx to javafx.fxml;
     exports com.example.videoplayerfx;
