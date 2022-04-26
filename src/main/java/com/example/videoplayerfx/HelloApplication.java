@@ -9,10 +9,7 @@ import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.stage.Stage;
@@ -35,7 +32,8 @@ public class HelloApplication extends Application {
     @Override
     public void start(Stage stage) throws IOException {
         String audioPath = "/Users/lindseymariewingate/Documents/school/576/fp/dataset2/Videos/data_test2.wav";
-        //String imagePath = "Users/lindseymariewingate/Documents/Pictures/fitbit.png";
+        //String imagePath = "Users/lindseymariewingate/Documents/school/576/fp/fitbit.png";
+        String imagePath = "https://www.google.com/search?q=google&source=lnms&tbm=isch&sa=X&ved=2ahUKEwiYr_abu7D3AhWADkQIHdZHCbYQ_AUoBHoECAIQBg&biw=657&bih=955&dpr=2#imgrc=JT5K7I_TR0CmQM";
         Media media = new Media(new File(audioPath).toURI().toString());
         MediaPlayer mediaPlayer = new MediaPlayer(media);
         //mediaPlayer.setAutoPlay(true);
@@ -80,16 +78,21 @@ public class HelloApplication extends Application {
         BorderPane.setAlignment(mediaBar, Pos.BOTTOM_CENTER);
         mediaBar.getChildren().add(playButton);
         mediaBar.getChildren().add(pauseButton);
-        Group root = new Group(mediaBar);
-        //VideoDisplay ren = new VideoDisplay();
-        //ren.showIms(args);
+        //Group root = new Group(mediaBar);
+        //jframe for video
+        //JFrame frame = new JFrame();
+        //frame.add(new JLabel(new ImageIcon(imgOne)));
+        //frame.pack();
+        //frame.setVisible(true);
 
-        //root.getChildren().add(mediaView);
+//add jframe to root for display?
+        StackPane root = new StackPane();
         Scene scene = new Scene(root, 320, 240);
-        //scene.setFill(Color.web("#81c483"));
-        //Image img = new Image(imagePath);
-       // ImagePattern pattern = new ImagePattern(img);
-        //scene.setFill(pattern);
+        Image img = new Image(imagePath);
+        BackgroundImage backgroundImage = new BackgroundImage(img, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
+        Background background = new Background(backgroundImage);
+        root.getChildren().add(mediaBar);
+        root.setBackground(background);
         stage.setScene(scene);
 
         stage.show();
