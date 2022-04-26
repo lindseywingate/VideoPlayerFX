@@ -1,5 +1,6 @@
 package com.example.videoplayerfx;
 
+import java.awt.image.BufferedImage;
 import java.io.File;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
@@ -8,10 +9,13 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.image.Image;
-import javafx.scene.layout.*;
+import javafx.scene.image.*;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
-import javafx.scene.paint.ImagePattern;
+import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
@@ -19,8 +23,8 @@ import javafx.scene.media.MediaPlayer.Status;
 import javafx.scene.media.MediaView;
 import javafx.scene.Group;
 
+import java.io.FileInputStream;
 import java.io.IOException;
-import java.awt.image.*;
 import javax.swing.*;
 import java.util.ArrayList;
 
@@ -32,8 +36,7 @@ public class HelloApplication extends Application {
     @Override
     public void start(Stage stage) throws IOException {
         String audioPath = "/Users/lindseymariewingate/Documents/school/576/fp/dataset2/Videos/data_test2.wav";
-        //String imagePath = "Users/lindseymariewingate/Documents/school/576/fp/fitbit.png";
-        String imagePath = "https://www.google.com/search?q=google&source=lnms&tbm=isch&sa=X&ved=2ahUKEwiYr_abu7D3AhWADkQIHdZHCbYQ_AUoBHoECAIQBg&biw=657&bih=955&dpr=2#imgrc=JT5K7I_TR0CmQM";
+        String imagePath = "/Users/lindseymariewingate/Documents/school/576/fp/fitbit.png";
         Media media = new Media(new File(audioPath).toURI().toString());
         MediaPlayer mediaPlayer = new MediaPlayer(media);
         //mediaPlayer.setAutoPlay(true);
@@ -78,23 +81,19 @@ public class HelloApplication extends Application {
         BorderPane.setAlignment(mediaBar, Pos.BOTTOM_CENTER);
         mediaBar.getChildren().add(playButton);
         mediaBar.getChildren().add(pauseButton);
-        //Group root = new Group(mediaBar);
-        //jframe for video
-        //JFrame frame = new JFrame();
-        //frame.add(new JLabel(new ImageIcon(imgOne)));
-        //frame.pack();
-        //frame.setVisible(true);
 
-//add jframe to root for display?
-        StackPane root = new StackPane();
-        Scene scene = new Scene(root, 320, 240);
-        Image img = new Image(imagePath);
-        BackgroundImage backgroundImage = new BackgroundImage(img, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
-        Background background = new Background(backgroundImage);
+        Group root = new Group();
         root.getChildren().add(mediaBar);
-        root.setBackground(background);
-        stage.setScene(scene);
 
+        Scene scene = new Scene(root, 320, 240, Color.BLACK);
+        Rectangle r = new Rectangle(25,25,250,250);
+        r.setFill(Color.BLUE);
+        FileInputStream inputstream = new FileInputStream(imagePath);
+        Image image = new Image(inputstream);
+        ImageView imageView = new ImageView(image);
+        root.getChildren().add(imageView);
+        root.getChildren().add(r);
+        stage.setScene(scene);
         stage.show();
     }
 
